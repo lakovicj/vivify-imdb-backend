@@ -5,17 +5,34 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Movie;
+use App\Services\MovieService;
 
 class MovieController extends Controller
 {
+
+    protected $movieService;
+
+    public function __construct(MovieService $ms)
+    {
+        $this->movieService = $ms;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Movie::with('genre')->get();
+        if ($request->has(['page', 'perPage']))
+        {
+            $page = (int)$request->input('page');
+            $perPage = (int)$request->input('perPage');
+
+            $movies = $this->movieService->getAllMoviesPaginated($page, $perPage);
+            return response()->json($movies, 200);
+        }
+        return $this->movieService->getAllMovies();
     }
 
     /**
@@ -37,7 +54,8 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        //
+        $movie = $this->movieService->getById($id);
+        return response()->json($movie, 200);
     }
 
     /**
