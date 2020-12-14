@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
-use App\Movie;
 use App\Services\MovieService;
 
 class MovieController extends Controller
