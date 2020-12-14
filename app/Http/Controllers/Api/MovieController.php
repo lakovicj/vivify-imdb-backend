@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
 use App\Movie;
 use App\Services\MovieService;
 
@@ -33,6 +34,16 @@ class MovieController extends Controller
             return response()->json($movies, 200);
         }
         return $this->movieService->getAllMovies();
+    }
+
+    public function searchMovies(SearchRequest $request)
+    {
+        $data = $request->validated();
+        $page = (int)$data['page'];
+        $perPage = (int)$data['perPage'];
+        $searchParam = $data['title'];
+        $movies = $this->movieService->searchMovies($searchParam, $page, $perPage);
+        return response()->json($movies, 200);
     }
 
     /**
