@@ -1,5 +1,6 @@
 <?php
 
+use App\Genre;
 use Faker\Generator as Faker;
 
 /*
@@ -14,9 +15,13 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Movie::class, function (Faker $faker) {
+
+    $genre = rand(1, Genre::all()->count());
+
     return [
         'title' => $faker->words(2, true),
         'description' => $faker->paragraph(10, true),
-        'image_url' => $faker->imageUrl(640, 480)
+        'image_url' => $faker->imageUrl(640, 480),
+        'genre_id' => $genre
     ];
 });
