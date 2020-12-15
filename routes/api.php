@@ -31,3 +31,5 @@ Route::get('search/movies', 'Api\MovieController@searchMovies')->middleware('aut
 Route::get('genres', 'Api\GenreController@getAllGenres')->middleware('api')->name('genres.all');
 
 Route::get('filter/movies', 'Api\MovieController@filterMovies')->middleware('auth:api')->name('movies.filter');
+
+Route::post('reactions', 'Api\ReactionController@store')->middleware('auth:api')->name('movies.reaction');

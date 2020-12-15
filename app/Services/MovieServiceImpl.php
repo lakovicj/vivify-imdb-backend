@@ -8,12 +8,16 @@ class MovieServiceImpl implements MovieService
 {
     public function getAllMovies()
     {
-        return Movie::with('genre')->get();
+        return Movie::with('genre')
+                    ->with('reactions')
+                    ->get();
     }
 
     public function getAllMoviesPaginated($page, $perPage = 10)
     {
-        $paginatedMovies = Movie::with('genre')->paginate($perPage, ['*'], 'page', $page);
+        $paginatedMovies = Movie::with('genre')
+                            ->with('reactions')
+                            ->paginate($perPage, ['*'], 'page', $page);
         $retArray = array(
             'movies' => $paginatedMovies->items(),
             'currentPage' => $paginatedMovies->currentPage(),
@@ -25,12 +29,17 @@ class MovieServiceImpl implements MovieService
 
     public function getById($id)
     {
-        return Movie::with('genre')->find($id);
+        return Movie::with('genre')
+                    ->with('reactions')
+                    ->find($id);
     }
 
     public function searchMovies($param, $page, $perPage)
     {
-        $paginatedResults = Movie::with('genre')->where('title', $param)->paginate($perPage, ['*'], 'page', $page);
+        $paginatedResults = Movie::with('genre')
+                                ->with('reactions')
+                                ->where('title', $param)
+                                ->paginate($perPage, ['*'], 'page', $page);
         $retArray = array(
             'movies' => $paginatedResults->items(),
             'currentPage' => $paginatedResults->currentPage(),
@@ -42,7 +51,10 @@ class MovieServiceImpl implements MovieService
 
     public function filterMovies($genreFilter, $page, $perPage)
     {
-        $paginatedResults = Movie::with('genre')->where('genre_id', $genreFilter)->paginate($perPage, ['*'], 'page', $page);
+        $paginatedResults = Movie::with('genre')
+                                ->with('reactions')
+                                ->where('genre_id', $genreFilter)
+                                ->paginate($perPage, ['*'], 'page', $page);
         $retArray = array(
             'movies' => $paginatedResults->items(),
             'currentPage' => $paginatedResults->currentPage(),

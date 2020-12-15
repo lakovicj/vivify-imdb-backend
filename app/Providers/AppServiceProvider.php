@@ -6,6 +6,8 @@ use App\Services\GenreService;
 use App\Services\GenreServiceImpl;
 use App\Services\MovieService;
 use App\Services\MovieServiceImpl;
+use App\Services\ReactionService;
+use App\Services\ReactionServiceImpl;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(MovieService::class, MovieServiceImpl::class);
         $this->app->bind(GenreService::class, GenreServiceImpl::class);
+        $this->app->bind(ReactionService::class, ReactionServiceImpl::class);
     }
 }
