@@ -27,3 +27,7 @@ Route::group([
 Route::apiResource('movies', 'Api\MovieController')->middleware('auth:api');
 
 Route::get('search/movies', 'Api\MovieController@searchMovies')->middleware('auth:api')->name('movies.search');
+
+Route::get('genres', 'Api\GenreController@getAllGenres')->middleware('api')->name('genres.all');
+
+Route::get('filter/movies', 'Api\MovieController@filterMovies')->middleware('auth:api')->name('movies.filter');

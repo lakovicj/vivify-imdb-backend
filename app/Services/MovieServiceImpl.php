@@ -39,4 +39,16 @@ class MovieServiceImpl implements MovieService
         );
         return $retArray;
     }
+
+    public function filterMovies($genreFilter, $page, $perPage)
+    {
+        $paginatedResults = Movie::with('genre')->where('genre_id', $genreFilter)->paginate($perPage, ['*'], 'page', $page);
+        $retArray = array(
+            'movies' => $paginatedResults->items(),
+            'currentPage' => $paginatedResults->currentPage(),
+            'perPage' => $paginatedResults->perPage(),
+            'totalMovies' => $paginatedResults->total()
+        );
+        return $retArray;
+    }
 }
