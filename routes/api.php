@@ -33,3 +33,6 @@ Route::get('genres', 'Api\GenreController@getAllGenres')->middleware('api')->nam
 Route::get('filter/movies', 'Api\MovieController@filterMovies')->middleware('auth:api')->name('movies.filter');
 
 Route::post('reactions', 'Api\ReactionController@store')->middleware('auth:api')->name('movies.reaction');
+
+Route::post('comments', 'Api\CommentController@addComment')->middleware('auth:api')->name('movies.comments');
+Route::get('movies/{id}/comments', 'Api\CommentController@getMovieComments')->middleware('auth:api');
