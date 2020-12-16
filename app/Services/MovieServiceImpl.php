@@ -63,4 +63,12 @@ class MovieServiceImpl implements MovieService
         );
         return $retArray;
     }
+
+    public function incrementViewCount($movieId)
+    {
+        $movie = Movie::find($movieId);
+        $movie->view_count = $movie->view_count + 1;
+        $movie->save();
+        return $movie;
+    }
 }

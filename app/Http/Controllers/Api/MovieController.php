@@ -56,6 +56,12 @@ class MovieController extends Controller
         return response()->json($movies, 200);
     }
 
+    public function addToMovieCount($id)
+    {
+        $updatedMovie = $this->movieService->incrementViewCount($id);
+        return response()->json($updatedMovie, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

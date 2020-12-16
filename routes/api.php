@@ -36,3 +36,5 @@ Route::post('reactions', 'Api\ReactionController@store')->middleware('auth:api')
 
 Route::post('comments', 'Api\CommentController@addComment')->middleware('auth:api')->name('movies.comments');
 Route::get('movies/{id}/comments', 'Api\CommentController@getMovieComments')->middleware('auth:api');
+
+Route::put('views/movies/{id}', 'Api\MovieController@addToMovieCount')->middleware('auth:api');
