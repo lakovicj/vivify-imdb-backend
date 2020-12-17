@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Movie;
+use Illuminate\Support\Facades\DB;
 
 class MovieServiceImpl implements MovieService
 {
@@ -70,5 +71,23 @@ class MovieServiceImpl implements MovieService
         $movie->view_count = $movie->view_count + 1;
         $movie->save();
         return $movie;
+    }
+
+    public function getPopularMovies($num = 10)
+    {
+        $reactions = DB::table('reactions')
+                        ->select('movie_id', DB::raw('count(id) as likes'))
+                        ->where('type', '=', 'like')
+                        ->groupBy('movie_id');
+
+        $popularMovies = DB::table('movies')
+                    ->joinSub($reactions, 'most_likes', function($join) {
+                        $join->on('movies.id', '=', 'most_likes.movie_id');
+                    })
+                    ->orderByDesc('likes')
+                    ->take($num)
+                    ->get();
+
+        return $popularMovies;
     }
 }

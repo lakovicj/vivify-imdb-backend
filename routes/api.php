@@ -38,3 +38,5 @@ Route::post('comments', 'Api\CommentController@addComment')->middleware('auth:ap
 Route::get('movies/{id}/comments', 'Api\CommentController@getMovieComments')->middleware('auth:api');
 
 Route::put('views/movies/{id}', 'Api\MovieController@addToMovieCount')->middleware('auth:api');
+
+Route::get('popular', 'Api\MovieController@getPopularMovies')->middleware('auth:api');

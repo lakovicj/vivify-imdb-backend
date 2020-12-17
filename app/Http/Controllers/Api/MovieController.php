@@ -62,6 +62,17 @@ class MovieController extends Controller
         return response()->json($updatedMovie, 200);
     }
 
+    public function getPopularMovies(Request $request)
+    {
+        if ($request->has(['num']))
+        {
+            $popularMovies = $this->movieService->getPopularMovies($request['num']);
+            return response()->json($popularMovies, 200);
+        }
+        $popularMovies = $this->movieService->getPopularMovies();
+        return response()->json($popularMovies, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
