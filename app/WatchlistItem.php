@@ -4,18 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class WatchlistItem extends Model
 {
     protected $fillable = [
         'movie_id',
         'user_id',
-        'text'
+        'watched'
     ];
 
-
-    public function user()
+    public function movie()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Movie');
     }
-
 }

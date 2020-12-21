@@ -40,3 +40,9 @@ Route::get('movies/{id}/comments', 'Api\CommentController@getMovieComments')->mi
 Route::put('views/movies/{id}', 'Api\MovieController@addToMovieCount')->middleware('auth:api');
 
 Route::get('popular', 'Api\MovieController@getPopularMovies')->middleware('auth:api');
+
+Route::get('watchlist', 'Api\WatchlistController@getUsersWatchlist')->middleware('auth:api')->name('user.watchlist');
+Route::post('watchlist', 'Api\WatchlistController@addWatchlistItem')->middleware('auth:api');
+Route::put('watchlist/{itemId}', 'Api\WatchlistController@updateWatchlistItem')->middleware('auth:api');
+Route::delete('watchlist/{itemId}', 'Api\WatchlistController@removeWatchlistItem')->middleware('auth:api');
+

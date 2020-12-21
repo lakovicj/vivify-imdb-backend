@@ -10,6 +10,8 @@ use App\Services\MovieService;
 use App\Services\MovieServiceImpl;
 use App\Services\ReactionService;
 use App\Services\ReactionServiceImpl;
+use App\Services\WatchlistService;
+use App\Services\WatchlistServiceImpl;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GenreService::class, GenreServiceImpl::class);
         $this->app->bind(ReactionService::class, ReactionServiceImpl::class);
         $this->app->bind(CommentService::class, CommentServiceImpl::class);
+        $this->app->bind(WatchlistService::class, WatchlistServiceImpl::class);
     }
 }

@@ -68,7 +68,7 @@ class MovieServiceImpl implements MovieService
     public function incrementViewCount($movieId)
     {
         $movie = Movie::find($movieId);
-        $movie->view_count = $movie->view_count + 1;
+        $movie->view_count++;
         $movie->save();
         return $movie;
     }
