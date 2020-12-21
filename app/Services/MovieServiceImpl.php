@@ -90,4 +90,16 @@ class MovieServiceImpl implements MovieService
 
         return $popularMovies;
     }
+
+    public function searchMovies($param, $page, $perPage)
+    {
+        $paginatedResults = Movie::with('genre')->where('title', $param)->paginate($perPage, ['*'], 'page', $page);
+        $retArray = array(
+            'movies' => $paginatedResults->items(),
+            'currentPage' => $paginatedResults->currentPage(),
+            'perPage' => $paginatedResults->perPage(),
+            'totalMovies' => $paginatedResults->total()
+        );
+        return $retArray;
+    }
 }

@@ -45,4 +45,3 @@ Route::get('watchlist', 'Api\WatchlistController@getUsersWatchlist')->middleware
 Route::post('watchlist', 'Api\WatchlistController@addWatchlistItem')->middleware('auth:api');
 Route::put('watchlist/{itemId}', 'Api\WatchlistController@updateWatchlistItem')->middleware('auth:api');
 Route::delete('watchlist/{itemId}', 'Api\WatchlistController@removeWatchlistItem')->middleware('auth:api');
-
