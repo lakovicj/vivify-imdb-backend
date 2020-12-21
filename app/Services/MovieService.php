@@ -8,4 +8,7 @@ interface MovieService
     public function getAllMoviesPaginated($page, $perPage = 10);
     public function getById($id);
     public function searchMovies($param, $page, $perPage);
+    public function filterMovies($genreFilter, $page, $perPage);
+    public function incrementViewCount($movieId);
+    public function getPopularMovies($num = 10);
 }
