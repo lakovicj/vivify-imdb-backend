@@ -4,18 +4,73 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Movie;
+use App\Http\Requests\FilterRequest;
+use App\Http\Requests\SearchRequest;
+use App\Services\MovieService;
 
 class MovieController extends Controller
 {
+
+    protected $movieService;
+
+    public function __construct(MovieService $ms)
+    {
+        $this->movieService = $ms;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Movie::all();
+        if ($request->has(['page', 'perPage']))
+        {
+            $page = (int)$request->input('page');
+            $perPage = (int)$request->input('perPage');
+
+            $movies = $this->movieService->getAllMoviesPaginated($page, $perPage);
+            return response()->json($movies, 200);
+        }
+        return $this->movieService->getAllMovies();
+    }
+
+    public function searchMovies(SearchRequest $request)
+    {
+        $data = $request->validated();
+        $page = (int)$data['page'];
+        $perPage = (int)$data['perPage'];
+        $searchParam = $data['title'];
+        $movies = $this->movieService->searchMovies($searchParam, $page, $perPage);
+        return response()->json($movies, 200);
+    }
+
+    public function filterMovies(FilterRequest $request)
+    {
+        $data = $request->validated();
+        $page = (int)$data['page'];
+        $perPage = (int)$data['perPage'];
+        $filterParam = $data['filter'];
+        $movies = $this->movieService->filterMovies($filterParam, $page, $perPage);
+        return response()->json($movies, 200);
+    }
+
+    public function addToMovieCount($id)
+    {
+        $updatedMovie = $this->movieService->incrementViewCount($id);
+        return response()->json($updatedMovie, 200);
+    }
+
+    public function getPopularMovies(Request $request)
+    {
+        if ($request->has(['num']))
+        {
+            $popularMovies = $this->movieService->getPopularMovies($request['num']);
+            return response()->json($popularMovies, 200);
+        }
+        $popularMovies = $this->movieService->getPopularMovies();
+        return response()->json($popularMovies, 200);
     }
 
     /**
@@ -37,7 +92,8 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        //
+        $movie = $this->movieService->getById($id);
+        return response()->json($movie, 200);
     }
 
     /**

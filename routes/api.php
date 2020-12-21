@@ -24,4 +24,24 @@ Route::group([
     Route::post('register', 'Auth\RegisterController@create');
 });
 
-Route::apiResource('movies', 'Api\MovieController');
+Route::apiResource('movies', 'Api\MovieController')->middleware('auth:api');
+
+Route::get('search/movies', 'Api\MovieController@searchMovies')->middleware('auth:api')->name('movies.search');
+
+Route::get('genres', 'Api\GenreController@getAllGenres')->middleware('api')->name('genres.all');
+
+Route::get('filter/movies', 'Api\MovieController@filterMovies')->middleware('auth:api')->name('movies.filter');
+
+Route::post('reactions', 'Api\ReactionController@store')->middleware('auth:api')->name('movies.reaction');
+
+Route::post('comments', 'Api\CommentController@addComment')->middleware('auth:api')->name('movies.comments');
+Route::get('movies/{id}/comments', 'Api\CommentController@getMovieComments')->middleware('auth:api');
+
+Route::put('views/movies/{id}', 'Api\MovieController@addToMovieCount')->middleware('auth:api');
+
+Route::get('popular', 'Api\MovieController@getPopularMovies')->middleware('auth:api');
+
+Route::get('watchlist', 'Api\WatchlistController@getUsersWatchlist')->middleware('auth:api')->name('user.watchlist');
+Route::post('watchlist', 'Api\WatchlistController@addWatchlistItem')->middleware('auth:api');
+Route::put('watchlist/{itemId}', 'Api\WatchlistController@updateWatchlistItem')->middleware('auth:api');
+Route::delete('watchlist/{itemId}', 'Api\WatchlistController@removeWatchlistItem')->middleware('auth:api');
